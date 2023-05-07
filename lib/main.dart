@@ -11,6 +11,7 @@ void main() async{
   await Hive.initFlutter();
   var box = await Hive.openBox('tasks_box');
   var expenseBox = await Hive.openBox('expense_box');
+  var habitBox = await Hive.openBox('habits_box');
 
   runApp(const MyDiplomApp());
 }

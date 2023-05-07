@@ -57,13 +57,18 @@ class _TaskWidgetState extends State<TaskWidget> {
     db.updateDatabase();
   }
 
+  void cancel(){
+    taskController.clear();
+    Navigator.of(context).pop();
+  }
+
   void addNewTask() {
     showDialog(
         context: context,
         builder: (context) {
           return NewTaskDialog(
             controller: taskController,
-            onCancel: () => Navigator.of(context).pop(),
+            onCancel: cancel,
             onSave: saveNewTask,
           );
         });

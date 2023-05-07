@@ -11,11 +11,12 @@ class NewTaskDialog extends StatelessWidget {
     return AlertDialog(
       title: const Text('Adding a new task'),
       content: Container(
-        height: 130,
+        height: 170,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             TextField(
+              textCapitalization: TextCapitalization.sentences,
               controller: controller,
               maxLines: 3,
               minLines: 1,

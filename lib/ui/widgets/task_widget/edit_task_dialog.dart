@@ -12,7 +12,7 @@ class EditTaskDialog extends StatelessWidget {
       title: const Text('Task editing'),
       //backgroundColor: Colors.grey,
       content: Container(
-        height: 130,
+        height: 170,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

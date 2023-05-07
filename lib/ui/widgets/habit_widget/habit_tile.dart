@@ -5,21 +5,24 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 class HabitTile extends StatelessWidget {
   final String habitName;
   final VoidCallback onPlayTap;
-  final VoidCallback onSettingsTap;
+  // final VoidCallback onSettingsTap;
+  Function(BuildContext)? editFunction;
   final int timeSpent;
   final int timeGoal;
   final bool habitStarted;
   Function(BuildContext)? deleteFunction;
-  HabitTile({
-    Key? key,
-    required this.habitName,
-    required this.onPlayTap,
-    required this.onSettingsTap,
-    required this.timeSpent,
-    required this.timeGoal,
-    required this.habitStarted,
-    required this.deleteFunction
-  }) : super(key: key);
+  HabitTile(
+      {Key? key,
+      required this.habitName,
+      required this.onPlayTap,
+      // required this.onSettingsTap,
+      required this.timeSpent,
+      required this.timeGoal,
+      required this.habitStarted,
+      required this.deleteFunction,
+      required this.editFunction
+      })
+      : super(key: key);
 
   //method which converting seconds to minutes : 65 sec = 1.05 min
   String formatToMinSec(int totalSeconds) {
@@ -44,23 +47,20 @@ class HabitTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
       child: Slidable(
-        endActionPane: ActionPane(
-            motion: const StretchMotion(),
-            children: [
-              SlidableAction(
-                onPressed: deleteFunction,
-                icon: Icons.delete_outline,
-                backgroundColor: Colors.red,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              SlidableAction(
-                onPressed: (context){},
-                icon: Icons.edit,
-                backgroundColor: Colors.blueGrey,
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ]
-        ),
+        endActionPane: ActionPane(motion: const StretchMotion(), children: [
+          SlidableAction(
+            onPressed: deleteFunction,
+            icon: Icons.delete_outline,
+            backgroundColor: Colors.red,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          SlidableAction(
+            onPressed: editFunction,
+            icon: Icons.edit,
+            backgroundColor: Colors.blueGrey,
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ]),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           decoration: BoxDecoration(
@@ -82,7 +82,9 @@ class HabitTile extends StatelessWidget {
                           Center(
                             child: CircularPercentIndicator(
                               radius: 30,
-                              percent: percentCompleted() < 1 ? percentCompleted() : 1,
+                              percent: percentCompleted() < 1
+                                  ? percentCompleted()
+                                  : 1,
                               progressColor: percentCompleted() <= 0.5
                                   ? Colors.red
                                   : (percentCompleted() <= 0.75
@@ -111,22 +113,27 @@ class HabitTile extends StatelessWidget {
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
-                      timeSpent < timeGoal * 60 ?
-                      Text(
-                        '${formatToMinSec(timeSpent)} / $timeGoal.00 = ${(percentCompleted() * 100).toStringAsFixed(0)}%',
-                        // '$timeSpent / $timeGoal',
-                        style: TextStyle(fontSize: 15, color: Colors.grey[400]),
-                      ) : Text(
-                        '$timeGoal.00 / $timeGoal.00 = ${(percentCompleted() * 100).toStringAsFixed(0)}%',
-                        // '$timeSpent / $timeGoal',
-                        style: TextStyle(fontSize: 15, color: Colors.grey[400]),
-                      )
+                      timeSpent < timeGoal * 60
+                          ? Text(
+                              '${formatToMinSec(timeSpent)} / $timeGoal.00 = ${(percentCompleted() * 100).toStringAsFixed(0)}%',
+                              // '$timeSpent / $timeGoal',
+                              style: TextStyle(
+                                  fontSize: 15, color: Colors.grey[400]),
+                            )
+                          : Text(
+                              '$timeGoal.00 / $timeGoal.00 = ${(percentCompleted() * 100).toStringAsFixed(0)}%',
+                              // '$timeSpent / $timeGoal',
+                              style: TextStyle(
+                                  fontSize: 15, color: Colors.grey[400]),
+                            )
                     ],
                   ),
                 ],
               ),
-              IconButton(
-                  onPressed: onSettingsTap, icon: const Icon(Icons.settings)),
+              // IconButton(
+              //   onPressed: onSettingsTap,
+              //   icon: const Icon(Icons.settings),
+              // ),
             ],
           ),
         ),

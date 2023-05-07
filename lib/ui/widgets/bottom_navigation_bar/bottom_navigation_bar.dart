@@ -21,7 +21,7 @@ class GoogleBottomBar extends StatelessWidget {
 
         tabs: const [
           GButton(
-            icon: Icons.calendar_month,
+            icon: Icons.currency_ruble,
             text: 'Expenses',
           ),
           GButton(
